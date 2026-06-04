@@ -1,0 +1,54 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "SmartSchool Israel Setup",
+        "description": "Enter your SmartSchool credentials to connect your account.",
+        "data": {
+          "username": "Username",
+          "password": "Password"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Invalid username or password. Please check your credentials.",
+      "cannot_connect": "Cannot connect to SmartSchool. Please check your internet connection and try again.",
+      "unknown": "An unexpected error occurred. Please try again."
+    },
+    "abort": {
+      "already_configured": "This account is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Select Student",
+        "description": "Choose which student to configure lesson times for.",
+        "data": {
+          "student": "Student"
+        }
+      },
+      "lesson_times": {
+        "title": "Lesson Times for {student_name}",
+        "description": "Configure lesson start and end times. Format: HH:MM-HH:MM (e.g., 8:00-8:50)",
+        "data": {
+          "hour_1_times": "Lesson 1",
+          "hour_2_times": "Lesson 2",
+          "hour_3_times": "Lesson 3",
+          "hour_4_times": "Lesson 4",
+          "hour_5_times": "Lesson 5",
+          "hour_6_times": "Lesson 6",
+          "hour_7_times": "Lesson 7",
+          "hour_8_times": "Lesson 8",
+          "hour_9_times": "Lesson 9"
+        }
+      }
+    },
+    "error": {
+      "invalid_time_format": "Invalid time format. Please use HH:MM-HH:MM format (e.g., 8:00-8:50) and ensure end time is after start time."
+    },
+    "abort": {
+      "no_students": "No students found. Please reload the integration."
+    }
+  }
+}

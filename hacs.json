@@ -1,0 +1,9 @@
+{
+  "name": "SmartSchool Israel",
+  "content_in_root": false,
+  "filename": "smartschool_il",
+  "render_readme": true,
+  "domains": ["smartschool_il"],
+  "iot_class": "Cloud Polling",
+  "homeassistant": "2024.1.0"
+}

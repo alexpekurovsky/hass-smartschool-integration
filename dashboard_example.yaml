@@ -1,0 +1,75 @@
+# SmartSchool Israel - Dashboard Example
+# Copy this content to create your own dashboard view
+
+# To use this dashboard:
+# 1. Go to Settings → Dashboards
+# 2. Click "Add Dashboard" or edit an existing one
+# 3. Add a new view and paste this YAML in RAW configuration editor
+# 4. Replace "student_name" with your student's entity name
+
+title: Student Name
+path: student_name
+icon: mdi:school
+badges: []
+cards: []
+type: sections
+sections:
+  - type: grid
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: entity
+            entity: todo.student_name_homework
+            name: Homework
+            icon: mdi:book-open-page-variant
+          - type: entity
+            entity: sensor.student_name_grade_average
+            name: Grade Average
+            icon: mdi:chart-line
+          - type: entity
+            entity: sensor.student_name_behavior_events
+            name: Behavior Events
+            icon: mdi:emoticon
+      - type: todo-list
+        entity: todo.student_name_homework
+        title: 📝 Homework
+  - type: grid
+    cards:
+      - type: markdown
+        title: 📊 Latest Grade
+        content: |
+          {{ as_timestamp(states('sensor.student_name_latest_grade')) | timestamp_custom('%B %d, %Y') }}
+
+          Lesson: {{ state_attr('sensor.student_name_latest_grade', 'subject') }}
+          
+          *{{ state_attr('sensor.student_name_latest_grade', 'title') }}*: **{{ state_attr('sensor.student_name_latest_grade', 'grade') }}**  
+      - type: markdown
+        title: 🎭 Recent Behavior Events
+        content: >
+          {% set events = state_attr('sensor.student_name_behavior_events',
+          'events') %}
+
+          {% if events and events|length > 0 %}
+            {% for event in events[:3] %}
+          **{{ event.eventDate[:10] }}** - {{ event.eventType }} - *{{
+          event.subjectName }}*
+
+            {% endfor %}
+          {% else %}
+
+          No recent behavior events
+
+          {% endif %}
+  - type: grid
+    cards:
+      - type: calendar
+        title: Weekly Schedule
+        entities:
+          - calendar.student_name_schedule
+        initial_view: listWeek
+        grid_options:
+          columns: 12
+          rows: 8
+max_columns: 4
+show_icon_and_title: true
+
