@@ -87,6 +87,18 @@ class SmartSchoolCalendar(CoordinatorEntity[SmartSchoolCoordinator], CalendarEnt
         self._events: list[CalendarEvent] = []
         self._update_events()
 
+    def _handle_coordinator_update(self) -> None:
+        """Handle updated data from the coordinator."""
+        # Re-read hour times from options (they might have changed)
+        options = self.coordinator.entry.options
+        self._hour_times = parse_hour_times(options, self._student_id) if options else HOUR_TIMES
+
+        # Update events with new data and potentially new hour times
+        self._update_events()
+
+        # Call parent to trigger state update
+        super()._handle_coordinator_update()
+
     def _update_events(self) -> None:
         """Update the list of calendar events from coordinator data."""
         student_data = self.coordinator.data.get("by_student", {}).get(self._student_id, {})
