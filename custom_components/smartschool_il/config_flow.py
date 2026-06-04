@@ -71,6 +71,7 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
         raise SmartSchoolError("No students found for this account")
 
     # Return info that you want to store in the config entry.
+    # Use parent name for integration title
     return {
         "title": user_data.get("fullName", data[CONF_USERNAME]),
         "students_count": len(students),

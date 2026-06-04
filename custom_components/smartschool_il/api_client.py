@@ -187,12 +187,13 @@ class SmartSchoolClient:
                 data = response.get("data", {})
                 children = data.get("childrens", [])
 
+                _LOGGER.debug("InitDashboard raw children data: %s", children)
                 _LOGGER.info("Found %d children", len(children))
 
                 # Convert to standard format
                 students = []
                 for child in children:
-                    students.append({
+                    student = {
                         "id": child.get("id"),
                         "firstName": child.get("firstName"),
                         "lastName": child.get("lastName"),
@@ -200,7 +201,9 @@ class SmartSchoolClient:
                         "classCode": child.get("classCode"),
                         "classNum": child.get("classNum"),
                         "cellphone": child.get("cellphone"),
-                    })
+                    }
+                    _LOGGER.debug("Processed student: %s", student)
+                    students.append(student)
 
                 return students
             else:

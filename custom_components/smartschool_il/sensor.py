@@ -344,6 +344,7 @@ class SmartSchoolSensor(CoordinatorEntity[SmartSchoolCoordinator], SensorEntity)
 
         self._attr_device_info = {
             "identifiers": {(DOMAIN, student_id)},
+            "name": student_info.get('fullName', 'SmartSchool Student'),
             "manufacturer": "SmartSchool Israel",
             "model": f"Class {class_code}-{class_num} ({hebrew_grade}{class_num})",
             "suggested_area": "School",
