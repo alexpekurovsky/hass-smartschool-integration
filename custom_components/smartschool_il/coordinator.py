@@ -81,12 +81,14 @@ class SmartSchoolCoordinator(DataUpdateCoordinator):
 
             # Fetch data for each student
             for student in students:
-                student_id = student["id"]
+                student_id = student["id"]  # API ID (changes per session)
+                stable_id = student["stable_id"]  # Stable identifier
                 student_name = student["fullName"]
                 class_code = student["classCode"]
                 class_num = student.get("classNum")
 
-                _LOGGER.debug("Fetching data for student: %s", student_name)
+                _LOGGER.debug("Fetching data for student: %s (stable_id: %s, api_id: %s)",
+                              student_name, stable_id, student_id)
 
                 student_data: dict[str, Any] = {
                     "info": student,
@@ -149,7 +151,8 @@ class SmartSchoolCoordinator(DataUpdateCoordinator):
                                 err,
                             )
 
-                data["by_student"][student_id] = student_data
+                # Store by stable_id (not API id which changes)
+                data["by_student"][stable_id] = student_data
 
             _LOGGER.info("Successfully fetched data for all students")
             return data

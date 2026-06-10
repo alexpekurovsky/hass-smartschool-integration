@@ -295,14 +295,14 @@ async def async_setup_entry(
     # Create sensors for each student
     students = coordinator.data.get("students", [])
     for student in students:
-        student_id = student["id"]
+        stable_id = student["stable_id"]  # Use stable identifier for devices
         student_name = student["fullName"]
 
         for description in SENSOR_TYPES:
             entities.append(
                 SmartSchoolSensor(
                     coordinator=coordinator,
-                    student_id=student_id,
+                    student_id=stable_id,  # Pass stable_id as student_id
                     student_name=student_name,
                     student_info=student,
                     description=description,

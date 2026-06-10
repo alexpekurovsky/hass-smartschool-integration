@@ -153,9 +153,9 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
         student_options = {}
 
         for student in students:
-            student_id = student["id"]
+            stable_id = student["stable_id"]  # Use stable identifier
             # Try to get customized device name from registry
-            device = device_reg.async_get_device(identifiers={(DOMAIN, student_id)})
+            device = device_reg.async_get_device(identifiers={(DOMAIN, stable_id)})
             if device:
                 # Use name_by_user if set, otherwise use device name
                 display_name = device.name_by_user or device.name
@@ -163,7 +163,7 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
                 # Fallback to API name if device not found
                 display_name = student["fullName"]
 
-            student_options[student_id] = display_name
+            student_options[stable_id] = display_name
 
         return self.async_show_form(
             step_id="init",

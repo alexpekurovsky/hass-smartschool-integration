@@ -193,8 +193,14 @@ class SmartSchoolClient:
                 # Convert to standard format
                 students = []
                 for child in children:
+                    # Create a stable identifier from immutable student attributes
+                    # The API's "id" field is a session token that changes periodically
+                    # Use firstName + lastName for stable device ID
+                    stable_id = f"{child.get('firstName', '')}_{child.get('lastName', '')}"
+
                     student = {
-                        "id": child.get("id"),
+                        "id": child.get("id"),  # Keep for API calls
+                        "stable_id": stable_id,  # Use for device identifiers
                         "firstName": child.get("firstName"),
                         "lastName": child.get("lastName"),
                         "fullName": f"{child.get('firstName', '')} {child.get('lastName', '')}".strip(),
@@ -202,7 +208,7 @@ class SmartSchoolClient:
                         "classNum": child.get("classNum"),
                         "cellphone": child.get("cellphone"),
                     }
-                    _LOGGER.debug("Processed student: %s", student)
+                    _LOGGER.debug("Processed student: %s (stable_id: %s)", student["fullName"], stable_id)
                     students.append(student)
 
                 return students
